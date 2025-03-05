@@ -23,7 +23,7 @@ export default function Page() {
         </div>
       </div>
       <div className="h-full bg-blue-600 hidden lg:flex items-center justify-center">
-        <Image src="/logoipsum-296.svg" height={100} width={100} alt="Logo" />
+        <Image src="/boto-logo.svg" height={200} width={200} alt="Logo" />
       </div>
     </div>
   );
