@@ -7,7 +7,14 @@ import { Menu } from "lucide-react";
 
 import { NavButton } from "@/components/nav-button";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const routes = [
   {
@@ -47,16 +54,14 @@ export const Navigation = () => {
   if (isMobile) {
     return (
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger>
-          <Button
-            variant="outline"
-            size="sm"
-            className="font-normal bg-white/10 hover:bg-white/20 hover:text-white border-none focus-visible:ring-offset-0 focus-visible:ring-transparent outline-none text-white focus:bg-white/30 transition"
-          >
-            <Menu className="size-4" />
-          </Button>
+        <SheetTrigger className="p-1.5 rounded-sm font-normal bg-white/10 hover:bg-white/20 hover:text-white border-none focus-visible:ring-offset-0 focus-visible:ring-transparent outline-none text-white focus:bg-white/30 transition">
+          <Menu className="size-4" />
         </SheetTrigger>
         <SheetContent side="left" className="px-2">
+          <SheetHeader>
+            <SheetTitle>Navigation</SheetTitle>
+            <SheetDescription>Explore the app</SheetDescription>
+          </SheetHeader>
           <nav className="flex flex-col gap-y-2 pt-10">
             {routes.map((route) => (
               <Button
