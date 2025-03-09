@@ -15,6 +15,13 @@
       "when": 1741500621149,
       "tag": "0001_yellow_hellion",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1741550539281,
+      "tag": "0002_yielding_warpath",
+      "breakpoints": true
     }
   ]
 }
