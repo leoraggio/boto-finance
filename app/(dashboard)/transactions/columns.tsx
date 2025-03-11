@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { InferResponseType } from "hono";
 import { ArrowUpDown } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { client } from "@/lib/hono";
@@ -50,15 +51,11 @@ export const columns: ColumnDef<ResponseType>[] = [
         </Button>
       );
     },
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const date = row.getValue("date") as Date;
 
-      return (
-        <span>
-          {format(date, "dd MMMM, yyyy")}
-        </span>
-      )
-    }
+      return <span>{format(date, "dd MMMM, yyyy")}</span>;
+    },
   },
   {
     accessorKey: "amount",
@@ -73,15 +70,18 @@ export const columns: ColumnDef<ResponseType>[] = [
         </Button>
       );
     },
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));
 
-      return(
-        <span>
+      return (
+        <Badge
+          variant={amount < 0 ? "destructive" : "primary"}
+          className="text-xs font-medium px-3.5 py-2.5"
+        >
           {formatCurrency(amount)}
-        </span>
-      )
-    }
+        </Badge>
+      );
+    },
   },
   { accessorKey: "account" },
   { accessorKey: "category" },
