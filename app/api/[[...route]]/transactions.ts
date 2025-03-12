@@ -55,8 +55,8 @@ const app = new Hono()
           accountId: transactions.accountId,
         })
         .from(transactions)
-        .innerJoin(categories, eq(transactions.categoryId, categories.id))
-        .leftJoin(accounts, eq(transactions.accountId, accounts.id))
+        .innerJoin(accounts, eq(transactions.accountId, accounts.id))
+        .leftJoin(categories, eq(transactions.categoryId, categories.id))
         .where(
           and(
             accountId ? eq(transactions.accountId, accountId) : undefined,
