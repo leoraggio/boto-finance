@@ -6,10 +6,10 @@ type Props = {
 };
 
 export const AccountColumn = ({ account, accountId }: Props) => {
-  const { onOpen: onOpenAccount } = useOpenAccount();
+  const { onOpen } = useOpenAccount();
 
   const onClick = () => {
-    onOpenAccount(accountId);
+    onOpen(accountId);
   };
 
   return (

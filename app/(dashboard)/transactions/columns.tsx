@@ -12,6 +12,7 @@ import { client } from "@/lib/hono";
 import { formatCurrency } from "@/lib/utils";
 import { AccountColumn } from "./account-column";
 import { Actions } from "./actions";
+import { CategoryColumn } from "./category-column copy";
 
 export type ResponseType = InferResponseType<
   typeof client.api.transactions.$get,
@@ -72,7 +73,13 @@ export const columns: ColumnDef<ResponseType>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span>{row.original.category}</span>;
+      return (
+        <CategoryColumn
+          id={row.original.id}
+          category={row.original.category}
+          categoryId={row.original.categoryId}
+        />
+      );
     },
   },
   {
