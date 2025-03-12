@@ -41,10 +41,6 @@ export const EditTransactionSheet = () => {
   const editMutation = useEditTransaction(id);
   const deleteMutation = useDeleteTransaction(id);
 
-  const isPending = editMutation.isPending || deleteMutation.isPending;
-
-  const isLoading = transactionQuery.isLoading;
-
   const categoryQuery = useGetCategories();
   const categoryMutation = useCreateCategory();
   const onCreateCategory = (name: string) => categoryMutation.mutate({ name });
@@ -60,6 +56,18 @@ export const EditTransactionSheet = () => {
     label: account.name,
     value: account.id,
   }));
+
+  const isPending =
+    editMutation.isPending ||
+    deleteMutation.isPending ||
+    transactionQuery.isLoading ||
+    categoryMutation.isPending ||
+    accountMutation.isPending;
+
+  const isLoading =
+    transactionQuery.isLoading ||
+    accountQuery.isLoading ||
+    categoryQuery.isLoading;
 
   const onSubmit = (values: FormValues) => {
     editMutation.mutate(values, {
@@ -81,14 +89,32 @@ export const EditTransactionSheet = () => {
     }
   };
 
+  const defaultValues = transactionQuery.data
+    ? {
+        date: transactionQuery.data.date
+          ? new Date(transactionQuery.data.date)
+          : new Date(),
+        accountId: transactionQuery.data.accountId,
+        categoryId: transactionQuery.data.categoryId,
+        amount: transactionQuery.data.amount.toString(),
+        notes: transactionQuery.data.notes,
+      }
+    : {
+        date: new Date(),
+        accountId: "",
+        categoryId: "",
+        amount: "",
+        notes: "",
+      };
+
   return (
     <>
       <ConfirmDialog />
       <Sheet open={isOpen} onOpenChange={onClose}>
         <SheetContent className="space-y-4">
           <SheetHeader>
-            <SheetTitle>Edit Account</SheetTitle>
-            <SheetDescription>Edit an existing account</SheetDescription>
+            <SheetTitle>Edit Transaction</SheetTitle>
+            <SheetDescription>Edit an existing transaction</SheetDescription>
           </SheetHeader>
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -96,6 +122,8 @@ export const EditTransactionSheet = () => {
             </div>
           ) : (
             <TransactionForm
+              id={id}
+              defaultValues={defaultValues}
               onSubmit={onSubmit}
               disabled={isPending}
               categoryOptions={categoryOptions}
