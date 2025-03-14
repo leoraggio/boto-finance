@@ -32,7 +32,6 @@ export const Chart = ({ data = [] }: Props) => {
     <Card className="border-none drop-shadow-sm">
       <CardHeader className="flex space-y-2 lg:space-y-0 lg:flex-row lg:items-center justify-between">
         <CardTitle className="text-xl line-clamp-1">Transactions</CardTitle>
-        {/* Add Select */}
         <Select defaultValue={chartType} onValueChange={onTypeChange}>
           <SelectTrigger className="lg:w-auto h-9 rounded-md px-3">
             <SelectValue placeholder="Chart type" />
