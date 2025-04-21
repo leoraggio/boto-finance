@@ -7,8 +7,6 @@ import qs from "query-string";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 
-import { useGetSummary } from "@/features/summary/api/use-get-summary";
-
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -17,7 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn, formatDateRange } from "@/lib/utils";
+import { formatDateRange } from "@/lib/utils";
 
 export const DateFilter = () => {
   const router = useRouter();
