@@ -28,25 +28,13 @@ const app = new Hono().get(
       return c.json({ error: "Unauthorized" }, 401);
     }
 
-    console.log("Auth userId:", auth.userId); // Add this line
-
     const defaultTo = new Date();
     const defaultFrom = subDays(defaultTo, 30);
-    console.log("Date range:", { defaultFrom, defaultTo });
 
     const startDate = from
       ? parse(from, "yyyy-MM-dd", new Date())
       : defaultFrom;
     const endDate = to ? parse(to, "yyyy-MM-dd", new Date()) : defaultTo;
-
-    // Add a debug query to check if data exists
-    const debugCount = await db
-      .select({ count: sql`count(*)`.mapWith(Number) })
-      .from(transactions)
-      .innerJoin(accounts, eq(transactions.accountId, accounts.id))
-      .where(eq(accounts.userId, auth.userId));
-
-    console.log("Total transactions for user:", debugCount);
 
     const periodLength = differenceInDays(endDate, startDate) + 1;
     const lastPeriodStart = subDays(startDate, periodLength);
