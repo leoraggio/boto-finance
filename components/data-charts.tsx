@@ -3,6 +3,10 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
+import {
+  CategoriesChart,
+  CategoriesChartLoading,
+} from "@/components/categories-chart";
 import { Chart, ChartLoading } from "@/components/chart";
 import { SpendingPie, SpendingPieLoading } from "@/components/spending-pie";
 import { useGetSummary } from "@/features/summary/api/use-get-summary";
@@ -24,6 +28,9 @@ const DataChartsContent = () => {
         <div className="col-span-1 lg:col-span-3 xl:col-span-2">
           <SpendingPieLoading />
         </div>
+        <div className="col-span-1 lg:col-span-6 xl:col-span-6">
+          <CategoriesChartLoading />
+        </div>
       </div>
     );
   }
@@ -34,7 +41,10 @@ const DataChartsContent = () => {
         <Chart data={data?.days} />
       </div>
       <div className="col-span-1 lg:col-span-3 xl:col-span-2">
-        <SpendingPie data={data?.categories} />
+        <SpendingPie data={data?.topCategories} />
+      </div>
+      <div className="col-span-1 lg:col-span-6 xl:col-span-6">
+        <CategoriesChart data={data?.categories} />
       </div>
     </div>
   );
@@ -50,6 +60,9 @@ export const DataCharts = () => {
           </div>
           <div className="col-span-1 lg:col-span-3 xl:col-span-2">
             <SpendingPieLoading />
+          </div>
+          <div className="col-span-1 lg:col-span-6 xl:col-span-6">
+            <CategoriesChartLoading />
           </div>
         </div>
       }
