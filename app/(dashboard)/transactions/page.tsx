@@ -1,6 +1,8 @@
 "use client";
 
 import { Loader2, Plus } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transactions";
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
@@ -12,10 +14,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
-const TransactionsPage = () => {
+type TransactionsContentProps = {
+  from?: string;
+  to?: string;
+  accountId?: string;
+};
+
+const TransactionsContent = ({
+  from,
+  to,
+  accountId,
+}: TransactionsContentProps) => {
   const newTransaction = useNewTransaction();
   const deleteTransactions = useBulkDeleteTransactions();
-  const transactionsQuery = useGetTransactions();
+  const transactionsQuery = useGetTransactions({ from, to, accountId });
   const transactions = transactionsQuery.data || [];
 
   const isDisabled =
@@ -64,6 +76,38 @@ const TransactionsPage = () => {
         </CardContent>
       </Card>
     </div>
+  );
+};
+
+const SearchParamsWrapper = () => {
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from") || "";
+  const to = searchParams.get("to") || "";
+  const accountId = searchParams.get("accountId") || "";
+
+  return <TransactionsContent from={from} to={to} accountId={accountId} />;
+};
+
+const TransactionsPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
+          <Card className="border-none drop-shadow-sm">
+            <CardHeader>
+              <Skeleton className="h-8 w-48" />
+            </CardHeader>
+            <CardContent>
+              <div className="h-[500px] w-full flex items-center justify-center">
+                <Loader2 className="size-6 text-slate-300 animate-spin" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      }
+    >
+      <SearchParamsWrapper />
+    </Suspense>
   );
 };
 
