@@ -3,13 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 import { client } from "@/lib/hono";
 import { convertAmountFromMiliunits } from "@/lib/utils";
 
-export const useGetSummary = (params?: { from?: string; to?: string; accountId?: string }) => {
+export const useGetSummary = (params?: {
+  from?: string;
+  to?: string;
+  accountId?: string;
+}) => {
   const from = params?.from || "";
   const to = params?.to || "";
   const accountId = params?.accountId || "";
 
   const query = useQuery({
-    queryKey: ["summary", { from, to, accountId }],
+    queryKey: ["summary"],
     queryFn: async () => {
       const response = await client.api.summary.$get({
         query: {
