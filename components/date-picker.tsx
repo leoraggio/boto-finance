@@ -40,7 +40,6 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
           selected={value}
           onSelect={onChange}
           disabled={disabled}
-          initialFocus
         />
       </PopoverContent>
     </Popover>
